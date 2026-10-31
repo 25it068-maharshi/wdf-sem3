@@ -1,0 +1,7 @@
+.DS_Store
+Thumbs.db
+*.log
+Practical-07/data/*.csv
+Practical-10/users.csv
+Practical-12/uploads/*
+!Practical-12/uploads/.gitkeep
