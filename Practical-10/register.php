@@ -1,0 +1,3 @@
+<?php
+if($_SERVER['REQUEST_METHOD']==='POST'){$email=filter_var($_POST['email']??'',FILTER_VALIDATE_EMAIL);$pass=$_POST['password']??'';if(!$email||strlen($pass)<8)exit('Invalid details');$f=fopen(__DIR__.'/users.csv','a');fputcsv($f,[$email,password_hash($pass,PASSWORD_DEFAULT),'student']);fclose($f);echo 'Registered. <a href="login.php">Login</a>';}
+?><form method="post"><input name="email" type="email" required><input name="password" type="password" minlength="8" required><button>Register</button></form>

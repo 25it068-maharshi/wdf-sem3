@@ -1,0 +1,8 @@
+<?php
+header('Content-Type: application/json; charset=utf-8');require 'config.php';$method=$_SERVER['REQUEST_METHOD'];$input=json_decode(file_get_contents('php://input'),true)??[];
+try{if($method==='GET'){$r=$db->query('SELECT id,name,email,course FROM students ORDER BY id DESC');echo json_encode(['success'=>true,'data'=>$r->fetch_all(MYSQLI_ASSOC)]);}
+elseif($method==='POST'){$name=trim($input['name']??'');$email=filter_var($input['email']??'',FILTER_VALIDATE_EMAIL);$course=trim($input['course']??'');if(!$name||!$email||!$course)throw new Exception('Invalid fields');$s=$db->prepare('INSERT INTO students(name,email,course) VALUES(?,?,?)');$s->bind_param('sss',$name,$email,$course);$s->execute();http_response_code(201);echo json_encode(['success'=>true,'message'=>'Student created']);}
+elseif($method==='PUT'){$id=(int)($input['id']??0);$name=trim($input['name']??'');$email=filter_var($input['email']??'',FILTER_VALIDATE_EMAIL);$course=trim($input['course']??'');if(!$id||!$name||!$email||!$course)throw new Exception('Invalid fields');$s=$db->prepare('UPDATE students SET name=?,email=?,course=? WHERE id=?');$s->bind_param('sssi',$name,$email,$course,$id);$s->execute();echo json_encode(['success'=>true,'message'=>'Student updated']);}
+elseif($method==='DELETE'){$id=(int)($input['id']??0);if(!$id)throw new Exception('Invalid id');$s=$db->prepare('DELETE FROM students WHERE id=?');$s->bind_param('i',$id);$s->execute();echo json_encode(['success'=>true,'message'=>'Student deleted']);}
+else{http_response_code(405);echo json_encode(['success'=>false,'message'=>'Method not allowed']);}}catch(Throwable $e){http_response_code(400);echo json_encode(['success'=>false,'message'=>$e->getMessage()]);}
+?>

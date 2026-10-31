@@ -1,0 +1,1 @@
+<?php require 'config.php';$name=trim($_POST['name']??'');$email=filter_var($_POST['email']??'',FILTER_VALIDATE_EMAIL);$course=trim($_POST['course']??'');if(!$name||!$email||!$course)exit('Invalid input');$s=$db->prepare('INSERT INTO students(name,email,course) VALUES(?,?,?)');$s->bind_param('sss',$name,$email,$course);$s->execute();header('Location: index.php');?>

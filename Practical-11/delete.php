@@ -1,0 +1,1 @@
+<?php require 'config.php';$id=filter_input(INPUT_GET,'id',FILTER_VALIDATE_INT);if($id){$s=$db->prepare('DELETE FROM students WHERE id=?');$s->bind_param('i',$id);$s->execute();}header('Location: index.php');?>

@@ -1,0 +1,1 @@
+<?php $db=new mysqli('localhost','root','','studenthub');if($db->connect_error){http_response_code(500);exit('Database connection failed');} $db->set_charset('utf8mb4');?>

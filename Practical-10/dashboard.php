@@ -1,0 +1,1 @@
+<?php session_start();if(empty($_SESSION['email'])){header('Location: login.php');exit;} ?><h1>Welcome <?=htmlspecialchars($_SESSION['email'])?></h1><p>Role: <?=htmlspecialchars($_SESSION['role'])?></p><a href="logout.php">Logout</a>
